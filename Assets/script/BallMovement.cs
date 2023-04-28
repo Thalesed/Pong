@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Threading;
 using UnityEditor;
 
@@ -9,11 +10,17 @@ public class BallMovement : MonoBehaviour
     public float speed = 1.3f;
 	public Transform target;
 	private int count = 0;
+	private int point = 0;
 
     // Start is called before the first frame update
     void Start(){
         GetComponent<Rigidbody2D>().velocity =
             Vector2.right * speed;
+    }
+
+	void OnGUI()
+    {
+        GUI.Label(new Rect(450, 20, 3000, 600), "Pontuação: " + this.point);
     }
 
 	void Update(){
@@ -45,8 +52,12 @@ public class BallMovement : MonoBehaviour
 			
 				GetComponent<Rigidbody2D>().velocity = dir*speed;
 				}
-				if (colisao.gameObject.name == "paredeDir" || colisao.gameObject.name == "paredeEsq"){
+				if (colisao.gameObject.name == "paredeDir"){
 					this.count = 1;
+					this.point ++;
+				}else if(colisao.gameObject.name == "paredeEsq"){
+					this.count = 1;
+					this.point --;
 				}
 
 				if (colisao.gameObject.name == "raqueteR"){
